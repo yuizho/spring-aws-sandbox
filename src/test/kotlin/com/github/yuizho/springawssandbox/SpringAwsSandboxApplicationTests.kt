@@ -1,23 +1,28 @@
 package com.github.yuizho.springawssandbox
 
-import com.github.yuizho.springawssandbox.config.DevS3Config
+import com.amazonaws.services.s3.AmazonS3
 import com.github.yuizho.springawssandbox.config.FileConfig
 import com.github.yuizho.springawssandbox.infra.FileOperations
 import org.junit.jupiter.api.Test
+import org.assertj.core.api.Assertions.assertThat
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes = [DevS3Config::class, FileConfig::class])
+@SpringBootTest(classes = [TestS3Config::class, FileConfig::class])
 class SpringAwsSandboxApplicationTests {
 
     @Autowired
     lateinit var s3Template: FileOperations
 
+    @Autowired
+    lateinit var amazonS3: AmazonS3
+
     @Test
     fun contextLoads() {
+        amazonS3.createBucket("test")
         s3Template.write("test", "Hello!!!")
         val actual = s3Template.read("test")
-        println(actual)
+        assertThat(actual).isEqualTo("Hello!!!")
     }
 
 }

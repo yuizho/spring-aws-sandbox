@@ -1,9 +1,5 @@
 package com.github.yuizho.springawssandbox.infra
 
-import com.amazonaws.services.s3.AmazonS3
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.cloud.aws.core.io.s3.SimpleStorageProtocolResolver
-import org.springframework.core.io.DefaultResourceLoader
 import org.springframework.core.io.ResourceLoader
 import org.springframework.core.io.WritableResource
 import java.io.BufferedReader
