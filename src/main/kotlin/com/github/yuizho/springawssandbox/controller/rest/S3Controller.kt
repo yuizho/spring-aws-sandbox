@@ -16,10 +16,12 @@ class S3Controlle(
     @GetMapping
     fun get(@RequestParam("bucket") bucket: String): String {
         if (!amazonS3.listBuckets().map { it.name }.contains(bucket)) {
+            println("create ${bucket} bucket!")
             amazonS3.createBucket(bucket)
         }
-        s3Operations.write(bucket, "Hello!!!")
-        val actual = s3Operations.read(bucket)
+        val filePath = "${bucket}/hello.txt"
+        s3Operations.write(filePath, "Hello!!!")
+        val actual = s3Operations.read(filePath)
         println(actual)
         return actual
     }

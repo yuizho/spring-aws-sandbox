@@ -20,8 +20,8 @@ class SpringAwsSandboxApplicationTests {
     @Test
     fun contextLoads() {
         amazonS3.createBucket("test")
-        s3Template.write("test", "Hello!!!")
-        val actual = s3Template.read("test")
+        s3Template.write("test/test.txt", "Hello!!!")
+        val actual = s3Template.read("test/test.txt")
         assertThat(actual).isEqualTo("Hello!!!")
     }
 
