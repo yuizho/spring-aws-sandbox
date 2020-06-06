@@ -4,14 +4,14 @@ import org.springframework.core.io.ResourceLoader
 import org.springframework.core.io.WritableResource
 import java.io.BufferedReader
 
-interface FileOperations {
+interface S3Operations {
     fun write(path: String, fileBody: String)
     fun read(path: String): String
 }
 
 class S3Template(
         private val resourceLoader: ResourceLoader
-) : FileOperations {
+) : S3Operations {
 
     override fun write(path: String, fileBody: String) {
         val resource = resourceLoader.getResource("s3://${path}/test.txt") as WritableResource
