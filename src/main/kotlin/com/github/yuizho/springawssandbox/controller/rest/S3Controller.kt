@@ -25,4 +25,18 @@ class S3Controlle(
         println(actual)
         return actual
     }
+
+    @GetMapping("/resources")
+    fun pattern(@RequestParam("bucket") bucket: String,
+                @RequestParam("pattern") pattern: String
+    ): Map<String, String> {
+        if (!amazonS3.listBuckets().map { it.name }.contains(bucket)) {
+            println("create ${bucket} bucket!")
+            amazonS3.createBucket(bucket)
+        }
+        val filePattern = "${bucket}/${pattern}"
+        val actual = s3Operations.readResources(filePattern)
+        println(actual)
+        return actual.associate { resource -> resource.filename!! to resource.inputStream.bufferedReader().use { it.readText() } }
+    }
 }
