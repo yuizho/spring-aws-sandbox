@@ -13,10 +13,9 @@ import org.springframework.core.io.ResourceLoader
 @Configuration
 class S3OperationsConfig {
     @Bean
-    fun s3Operations(applicationContext: ApplicationContext, amazonS3: AmazonS3, resourceLoader: ResourceLoader): S3Operations {
+    fun s3Operations(applicationContext: ApplicationContext, amazonS3: AmazonS3): S3Operations {
         return S3Template(
-                PathMatchingSimpleStorageResourcePatternResolver(amazonS3, applicationContext),
-                resourceLoader
+                PathMatchingSimpleStorageResourcePatternResolver(amazonS3, applicationContext)
         )
     }
 }

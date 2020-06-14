@@ -13,19 +13,18 @@ interface S3Operations {
 }
 
 class S3Template(
-        private val resourcePatternResolver: ResourcePatternResolver,
-        private val resourceLoader: ResourceLoader
+        private val resourcePatternResolver: ResourcePatternResolver
 ) : S3Operations {
 
     override fun write(filePath: String, fileBody: String) {
-        val resource = resourceLoader.getResource("s3://${filePath}") as WritableResource
+        val resource = resourcePatternResolver.getResource("s3://${filePath}") as WritableResource
         resource.outputStream.bufferedWriter().use {
             it.write(fileBody)
         }
     }
 
     override fun read(filePath: String): String {
-        val resource = resourceLoader.getResource("s3://${filePath}")
+        val resource = resourcePatternResolver.getResource("s3://${filePath}")
         return resource.inputStream.bufferedReader().use(BufferedReader::readText)
     }
 
